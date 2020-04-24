@@ -12,7 +12,7 @@ Dynamic Landing Page for Rotary and Rotaract Clubs witch use Zoom Meetings.
     - Registrierung wahlweise aktiv oder auch nicht (erkennt die Landing Page automatisch)
     - Im Falle der Registierung in den Einstellen die Info-Mails an die Teilnehmer deaktivieren
 
-3. API Key+Secret für eine JWT im Zoom Marketplace generieren
+3. API Key+Secret für eine JWT-App im Zoom Marketplace generieren
 
 4. [includes/settings.inc.php](include/settings.inc.php) modifizieren
 
