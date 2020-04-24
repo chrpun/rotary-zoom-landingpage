@@ -61,6 +61,10 @@ $meeting_id = 000000000;
 // RC/RAC Club Name (zur Anzeige auf der Website)
 $club_name ='Rotary Club Bröckede';
 
+// Ist es ein Rotaract Club (=true)? Wenn ja, welcher Rotary Club sponsort diese Landing Page/die Zoom Lizenz (kann auch leer bleiben)?
+$club_is_rotaract = false;
+$rotaract_sponsor_club = '';
+
 // Direkte Weiterleitung zu Zoom (= true) oder erst Anzeige einer Erfolgsnachricht und dann Weiterleitung nach 5 Sekunden (= false)
 $direct_header_redirect = false;
 
