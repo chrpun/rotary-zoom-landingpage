@@ -1,5 +1,7 @@
-# rotary-zoom-landingpage
-Dynamic Landing Page for Rotary and Rotaract Clubs witch use Zoom Meetings.
+# Rotary Zoom Landing Page Software
+> by Rotary E-Club of D-1850
+
+Dynamic Landing Page for Rotary and Rotaract Clubs which use Zoom Meetings.
 
 ## Installation
 
@@ -14,7 +16,7 @@ Dynamic Landing Page for Rotary and Rotaract Clubs witch use Zoom Meetings.
 
 3. API Key+Secret für eine JWT-App im Zoom Marketplace generieren
 
-4. [includes/settings.inc.php](include/settings.inc.php) modifizieren
+4. [includes/settings.inc.php](includes/settings.inc.php) modifizieren
 
 5. Club-Logo, Datenschutzerklärung und Anleitung austauschen
 
