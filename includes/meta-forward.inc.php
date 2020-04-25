@@ -13,7 +13,11 @@ meta-forward.inc.php
 ========================================================
 */
 
-
+// Sicherstellen, dass diese Seite nur von einer anderen Seite aufgerufen wird und nicht eigenständig
+if (!isset($club_name) || !isset($url)) {
+  header('Location: ../index.php');
+  die();
+}
 
 ?><!DOCTYPE html>
 <html lang="en">
