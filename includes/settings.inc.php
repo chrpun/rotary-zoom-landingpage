@@ -83,7 +83,9 @@ $instagram_link = '';
 $youtube_link = '';
 $twitter_link = '';
 
-
+// Sollen Teilnehmer-Informationen lokal in einer CSV-Datei gespeichert werden (unabhängig von der Zoom Funktion)
+$save_participant_information = true;
+$save_filename = 'data.csv';
 
 /*
 ==========================================
@@ -91,6 +93,11 @@ Meeting-Infos für Website Funktionen bereitstellen
 Statisch - nicht verändern
 ==========================================
 */
+
+if ($save_participant_information && !is_writable($save_filename)) {
+  die('Die Datei '.$save_filename.' ist leider nicht beschreibbar!');
+}
+
 
 $info = get_meeting_info($meeting_id);
 

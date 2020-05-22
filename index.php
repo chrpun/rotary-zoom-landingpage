@@ -16,6 +16,15 @@ index.php
 // Laden der Einstellungen und benötigen Funktionen
 require __DIR__ . '/includes/settings.inc.php';
 
+//Backwards-Kompatibiltät (neue Option in settings.inc.php, wenn nicht gesetzt, werden Teilnehmer-Infos nicht gespeichert):
+if(!isset($save_participant_information)) $save_participant_information = false;
+
+if($registration_enabled || $save_participant_information)
+  $require_form = true;
+else
+  $require_form = false;
+
+
 
 /*
 ==========================================
@@ -39,7 +48,7 @@ if (!empty($_POST)) {
   // Die Validierungen erfolgen zusätzlich zu der Client-seitigen Validierung im Browser!
   // Namen und RC werden erstmal nicht weiter inhaltlich validiert. Nur leer dürfen sie nicht sein.
   
-  if ($registration_enabled) {
+  if ($require_form) {
     $firstname = isset($_POST['input-firstname']) ? htmlspecialchars($_POST['input-firstname']) : '';
     $lastname = isset($_POST['input-lastname']) ? htmlspecialchars($_POST['input-lastname']) : '';
     $email = isset($_POST['input-email']) ? htmlspecialchars($_POST['input-email']) : '';
@@ -83,6 +92,14 @@ if (!empty($_POST)) {
   
   
   if(!$error){
+    
+    if ($save_participant_information) {
+      $datensatz = date(DATE_RFC822).';'.$firstname.';'.$lastname.';'.$rc.';'.$email."\r\n";
+      
+      $handle = fopen ($save_filename, 'a');
+      fwrite ($handle, $datensatz);
+      fclose ($handle);
+    }
     
     if ($registration_enabled) {
       
@@ -170,12 +187,12 @@ if (!empty($_POST)) {
               </div>
  
               <div class="mb-5 text-center">
-                Bevor es losgehen kann,<?php if ($registration_enabled): ?> tragen Sie bitte Ihren Namen, Rotary Club und Ihre E-Mail Adresse ein und<?php endif ?> lesen und akzeptieren Sie die Bedingungen.<br>
+                Bevor es losgehen kann,<?php if ($require_form): ?> tragen Sie bitte Ihren Namen, Rotary Club und Ihre E-Mail Adresse ein und<?php endif ?> lesen und akzeptieren Sie die Bedingungen.<br>
                 Viel Spaß bei unseren Meetings<?php if ($club_is_rotaract && $rotaract_sponsor_club != '') echo ' - powered by <strong>'.$rotaract_sponsor_club.'</strong>' ?>!
               </div>
               
               <form method="post" novalidate>
-                <?php if ($registration_enabled): ?>
+                <?php if ($require_form): ?>
                 <div class="row">
                     <div class="col">
                 <div class="form-label-group">
