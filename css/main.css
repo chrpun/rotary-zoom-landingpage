@@ -1,8 +1,4 @@
 /*
-============================================
-Standard Version for ROTARY Clubs
-============================================
-
 ROTARY Color Codes
 
 Royal Blue
@@ -32,6 +28,7 @@ Hex #d91b5c R217 G27 B92
   min-height: 100vh;
 }
 
+/* Wird je nach Einstellung in settings.inc.php in der index.php überschrieben! */
 .bg-image {
   /* background-image: url('https://source.unsplash.com/WEQbe2jBg40/600x1200'); */
   /*background-image: url('https://source.unsplash.com/nNMBa7Y1Ymk/600x1200'); */
@@ -41,6 +38,17 @@ Hex #d91b5c R217 G27 B92
   /* Farbiger Overlay */
   box-shadow: inset 0 0 0 100vw rgba(247,168,27,0.4); 
 }
+@media (max-width: 768px) {
+  .bg-image-right {
+    background-image: url('../img/bg.jpg');
+    background-size: cover;
+    background-position: top;
+    box-shadow: inset 0 0 0 100vw rgba(255,255,255,0.9); 
+  }
+}
+
+
+
 
 .meeting-status {
   margin-top: 1rem;
@@ -63,6 +71,19 @@ Hex #d91b5c R217 G27 B92
 
 .login-heading {
   font-weight: 300;
+}
+
+@media (max-width: 768px) {
+  .tab-content {
+    border-left: 1px solid #dee2e6;
+    border-right: 1px solid #dee2e6;
+    border-bottom: 1px solid #dee2e6;
+  
+    border-bottom-right-radius: .25rem;
+    border-bottom-left-radius: .25rem;
+  
+    background-color: #ffffff;
+  }
 }
 
 .btn-login {
