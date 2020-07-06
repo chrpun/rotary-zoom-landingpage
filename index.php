@@ -181,7 +181,7 @@ if (!empty($_POST) && $_POST['go'] == 'sso') {
 			// CURLOPT_FRESH_CONNECT => 1,
 			// CURLOPT_FORBID_REUSE => 1,
 			CURLOPT_RETURNTRANSFER => 1,
-			CURLOPT_TIMEOUT => 20,
+			// CURLOPT_TIMEOUT => 20,
       CURLOPT_USERPWD => urlencode($oauth2_client_id).':'.urlencode($oauth2_client_secret),
 			CURLOPT_POSTFIELDS => http_build_query($params)
 	);
@@ -224,7 +224,7 @@ if (!empty($_POST) && $_POST['go'] == 'sso') {
 				// CURLOPT_FRESH_CONNECT => 1,
 				// CURLOPT_FORBID_REUSE => 1,
 				CURLOPT_RETURNTRANSFER => 1,
-				CURLOPT_TIMEOUT => 20,
+				// CURLOPT_TIMEOUT => 20,
 				CURLOPT_POSTFIELDS => http_build_query(array("token" => $token["result"]["access_token"]))
 		);
 
