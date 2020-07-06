@@ -170,7 +170,7 @@ if (!$registration_enabled) $direct_zoom_link = $zoom_protokoll . '://zoom.us/jo
                 <?php else: ?>
                   
                   <a href="<?php echo $direct_zoom_link ?>" class="btn btn-lg btn-block btn-forward text-uppercase font-weight-bold mt-4 mb-4 btn-success" role="button">Weiter zu Zoom als Teilnehmer</a>
-                  Sie haben die Zoom Software noch nicht installiert und/oder der Button funktioniert nicht?<br><a href="<?php echo $url ?>">Hier klicken</a> um auf die Zoom-Homepage zu gehen und von dort die Software zu installieren und das Meeting zu starten.
+                  Sie haben die Zoom Software noch nicht installiert und/oder der Button funktioniert nicht?<br><a href="<?php echo $url.'&uname='.urlencode($zoom_username); ?>">Hier klicken</a> um auf die Zoom-Homepage zu gehen und von dort die Software zu installieren und das Meeting zu starten.
                   
                 <?php endif ?>
                 

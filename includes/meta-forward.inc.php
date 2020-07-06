@@ -112,7 +112,7 @@ if ($active_mandatory_registration && !$registration_enabled && !$zoom_host_case
                 <?php if ($active_mandatory_registration && !$registration_enabled && !$zoom_host_case): ?>
                   In wenigen Sekunden sollten Sie automatisch gefragt werden ob Sie die Zoom App starten wollen. Sollte das nicht funktionien, klicken Sie bitte hier:
                   <a href="<?php echo $direct_zoom_link ?>" class="btn btn-lg btn-block btn-forward text-uppercase font-weight-bold mt-4 mb-4 btn-success" role="button">Weiter zu Zoom...</a>
-                  Sie haben die Zoom Software noch nicht installiert und/oder der Button funktioniert nicht?<br><a href="<?php echo $url ?>">Hier klicken</a> um auf die Zoom-Homepage zu gehen und von dort die Software zu installieren und das Meeting zu starten.<br><br>
+                  Sie haben die Zoom Software noch nicht installiert und/oder der Button funktioniert nicht?<br><a href="<?php echo $url.'&uname='.urlencode($zoom_username); ?>">Hier klicken</a> um auf die Zoom-Homepage zu gehen und von dort die Software zu installieren und das Meeting zu starten.<br><br>
                 <?php endif ?>
                 
                 Viel Spaß bei unseren Meetings!<br><br>
