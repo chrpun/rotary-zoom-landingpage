@@ -420,7 +420,7 @@ if (!empty($_POST) && $_POST['go'] == 'sso') {
                         <div class="invalid-feedback">Bitte akzeptieren Sie die Möglichkeit der Aufzeichnung!</div>
                       </div>
                       <input type="hidden" id="go" name="go" value="guest">
-                      <button class="btn btn-lg btn-primary btn-block btn-login text-uppercase font-weight-bold mb-2" type="submit">Los geht`s!</button>
+                      <button class="btn btn-lg btn-primary btn-block btn-login text-uppercase font-weight-bold mb-2" type="submit"><span class="spinner-border spinner-border-sm mr-2" role="status" aria-hidden="true" hidden="true"></span>Los geht`s!</button>
                   </form>
                   
                 </div>
@@ -458,7 +458,7 @@ if (!empty($_POST) && $_POST['go'] == 'sso') {
                         <div class="invalid-feedback">Bitte akzeptieren Sie die Möglichkeit der Aufzeichnung!</div>
                       </div>
                       <input type="hidden" id="go" name="go" value="sso">
-                      <button class="btn btn-lg btn-primary btn-block btn-login text-uppercase font-weight-bold mb-2" type="submit">Los geht`s!</button>
+                      <button class="btn btn-lg btn-primary btn-block btn-login text-uppercase font-weight-bold mb-2" type="submit"><span class="spinner-border spinner-border-sm mr-2" role="status" aria-hidden="true" hidden="true"></span>Los geht`s!</button>
                   </form>
                   
                 </div>
@@ -544,6 +544,12 @@ if (!empty($_POST) && $_POST['go'] == 'sso') {
             $('#input-rc').prop('value', '');
           }
       });
+  });
+  
+  $('form').submit(function() {
+    $(this).find('button[type=submit]').prop('disabled', true);
+    $(this).find('span.spinner-border').removeAttr('hidden');
+    return true;
   });
 </script>
 
