@@ -6,8 +6,8 @@ Copyright 2020 Christian Punke, Rotary E-Club of D-1850
 https://github.com/chrpun/rotary-zoom-landingpage
 ========================================================
 
-meta-forward.inc.php
->> Alternative HTML Seite zu index.php und host-login.php welche den Benutzer über ein Meta-Refresh zu Zoom weiterleitet (wenn Einstellung in settings.php entsprechend gesetzt ist)
+meta-forward_sso.inc.php
+>> Alternative HTML Seite für das SSO-Login Szenario zu index.php und host-login.php welche den Benutzer über ein Meta-Refresh zu Zoom weiterleitet (wenn Einstellung in settings.php entsprechend gesetzt ist)
 >> wird von index.php bzw. host-login.php eingebunden
 
 ========================================================
@@ -47,8 +47,9 @@ $scopes = explode(' ', $data['scope']);
 $member_of_club = ( strstr($data['scope'], $club_scope) ) ? true : false;
 
 if ($member_of_club) {
-  $club_admin = ( strstr($data[$club_scope], 'ROLE_RC_ADMIN ') ) ? true : false;
+  $club_admin = ( strstr($data[$club_scope], 'ROLE_RC_ADMIN') ) ? true : false;
   $club_president = ( strstr($data[$club_scope], 'ROLE_RC_PRESIDENT ') ) ? true : false; //Such-String mit Leerzeichen, damit zB ROLE_RC_PRESIDENT_PAST nicht auch gefunden wird
+  $club_secretary = ( strstr($data[$club_scope], 'ROLE_RC_SECRETARY') ) ? true : false;
 } else {
   $club_admin = false;
   $club_president = false;
@@ -142,14 +143,15 @@ if (!$registration_enabled) $direct_zoom_link = $zoom_protokoll . '://zoom.us/jo
                 <?php if ($member_of_club): ?>
                   <strong>Club-Admin: </strong><?php echo ($club_admin) ? 'ja!' : 'nein' ?><br>
                   <strong>Club-Präsident: </strong><?php echo ($club_president) ? 'ja!' : 'nein' ?><br>
+                  <strong>Club-Sekretär: </strong><?php echo ($club_secretary) ? 'ja!' : 'nein' ?><br>
                 <?php endif ?>
                 <br>
                 
-                  <a class="btn btn-secondary btn-sm" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+                  <a class="btn btn-secondary btn-sm" data-toggle="collapse" href="#collapseSSOInfo" role="button" aria-expanded="false" aria-controls="collapseSSOInfo">
                     Weitere Infos...
                   </a>
 
-                <div class="collapse" id="collapseExample">
+                <div class="collapse" id="collapseSSOInfo">
                   <div class="card card-body small">
                     <strong>RI #: </strong><?php echo $data['rotaryInternationalNumber']; ?><br>
                     <strong>Sub: </strong><?php echo $data['sub']; ?><br>
@@ -160,6 +162,41 @@ if (!$registration_enabled) $direct_zoom_link = $zoom_protokoll . '://zoom.us/jo
                   </div>
                 </div>
                 
+                <?php if ($member_of_club && ($club_admin || $club_president || $club_secretary)): ?>
+                    <br><br>
+                    <a class="btn btn-secondary btn-sm" data-toggle="collapse" href="#collapsePraesenz" role="button" aria-expanded="false" aria-controls="collapsePraesenz">
+                      Präsenzinfos der letzten 3 Meetings anzeigen
+                    </a>
+
+                  <div class="collapse" id="collapsePraesenz">
+                    <div class="card card-body small">
+                      <?php
+                        $show_activity_list = true;
+                        $number_of_meetings = 3;
+                        $min_meeting_length = 30;
+                        $min_participant_length = 2;
+                        require __DIR__ . '/list-meeting-activity.inc.php';
+                      ?>
+                    </div>
+                  </div>
+                  
+                  <?php if ($registration_enabled): ?>
+                    <br><br>
+                    <a class="btn btn-secondary btn-sm" data-toggle="collapse" href="#collapseRegister" role="button" aria-expanded="false" aria-controls="collapseRegister">
+                      Meeting-Registrierung zeigen
+                    </a>
+
+                  <div class="collapse" id="collapseRegister">
+                    <div class="card card-body small">
+                      <?php
+                        $show_participant_list = true;
+                        require __DIR__ . '/list-participants.inc.php';
+                      ?>
+                    </div>
+                  </div>
+                  <?php endif ?>
+                  
+                <?php endif ?>
                 <br><br>
                 
                 <?php if ($registration_enabled): ?>
