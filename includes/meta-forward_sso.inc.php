@@ -165,7 +165,7 @@ if (!$registration_enabled) $direct_zoom_link = $zoom_protokoll . '://zoom.us/jo
                 <?php if ($member_of_club && ($club_admin || $club_president || $club_secretary)): ?>
                     <br><br>
                     <a class="btn btn-secondary btn-sm" data-toggle="collapse" href="#collapsePraesenz" role="button" aria-expanded="false" aria-controls="collapsePraesenz">
-                      Präsenzinfos der letzten 3 Meetings anzeigen
+                      Präsenzinfos der letzten Meetings anzeigen
                     </a>
 
                   <div class="collapse" id="collapsePraesenz">
@@ -175,6 +175,9 @@ if (!$registration_enabled) $direct_zoom_link = $zoom_protokoll . '://zoom.us/jo
                         $number_of_meetings = 3;
                         $min_meeting_length = 30;
                         $min_participant_length = 2;
+                        echo 'Es werden die letzten '.$number_of_meetings.' Meetings anzeigt, die min. '.$min_meeting_length.' Minuten gedauert haben.<br>Es werden alle Teilnehmer angezeigt, die min. '.$min_participant_length.' Minuten im Meeting waren.';
+                      ?>
+                      <?php
                         require __DIR__ . '/list-meeting-activity.inc.php';
                       ?>
                     </div>
