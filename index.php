@@ -29,7 +29,6 @@ $show_error['input-firstname'] = false;
 $show_error['input-lastname'] = false;
 $show_error['input-rc'] = false;
 $show_error['input-email'] = false;
-$show_error['check-data'] = false;
 $show_error['check-recording'] = false;
 
 # Check ob Formulardaten vorhanden sind
@@ -68,14 +67,9 @@ if (!empty($_POST)) {
   
   }
   
-  $check_data = (isset($_POST['check-data']) && $_POST['check-data'] == 'on') ? true : false;
   $check_recording = (isset($_POST['check-recording']) && $_POST['check-recording'] == 'on') ? true : false;
   
-  // Check der beiden Checkboxen:
-  if (!$check_data) {
-    $error = true;
-    $show_error['check-data'] = true;
-  }
+  // Check der Checkbox:
   if (!$check_recording) {
     $error = true;
     $show_error['check-recording'] = true;
@@ -170,7 +164,7 @@ if (!empty($_POST)) {
               </div>
  
               <div class="mb-5 text-center">
-                Bevor es losgehen kann,<?php if ($registration_enabled): ?> tragen Sie bitte Ihren Namen, Rotary Club und Ihre E-Mail Adresse ein und<?php endif ?> lesen und akzeptieren Sie die Bedingungen.<br>
+                Bevor es losgehen kann, möchten wir auf unsere <a href="files/<?php echo $dataprotection_filename ?>">Datenschutzhinweise</a> aufmerksam machen.<?php if ($registration_enabled): ?> Weiterhin tragen Sie bitte Ihren Namen, Rotary Club und Ihre E-Mail Adresse ein.<?php endif ?><br>
                 Viel Spaß bei unseren Meetings<?php if ($club_is_rotaract && $rotaract_sponsor_club != '') echo ' - powered by <strong>'.$rotaract_sponsor_club.'</strong>' ?>!
               </div>
               
@@ -215,11 +209,6 @@ if (!empty($_POST)) {
                 </div>
                   
                 <?php endif ?>
-                <div class="custom-control custom-checkbox mb-3">
-                  <input type="checkbox" class="custom-control-input<?php if ($show_error['check-data']) echo ' is-invalid'; ?>" id="check-data" name="check-data" <?php echo (isset($check_data) && $check_data) ? 'checked' : ''; ?> required>
-                  <label class="custom-control-label" for="check-data">Ich akzeptiere die <a href="files/<?php echo $dataprotection_filename ?>">Datenschutzbestimmungen</a>.</label>
-                  <div class="invalid-feedback">Bitte akzeptieren Sie unsere Datenschutzbestimmungen!</div>
-                </div>
                 
                 <div class="custom-control custom-checkbox mb-3">
                   <input type="checkbox" class="custom-control-input<?php if ($show_error['check-recording']) echo ' is-invalid'; ?>" id="check-recording" name="check-recording" <?php echo (isset($check_recording) && $check_recording) ? 'checked' : ''; ?> required>
