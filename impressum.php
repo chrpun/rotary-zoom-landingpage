@@ -49,13 +49,12 @@ require __DIR__ . '/includes/settings.inc.php';
 		Verantwortlicher bzw. Vertretungsberechtigter gemäß
 		
     <ul>
-      <li>§ 5 TMG, </li>
-      <li>§ 55 Abs. 2 RStV und</li>
-      <li>Art. 4, Nr.7 DS-GVO</li>
+      <li>§ 5 TMG und</li>
+      <li>§ 18 Abs. 2 MStV</li>
     </ul>
    
 ist der<br>
-<p><strong><?php echo $club_name ?></strong><br>vertreten durch die amtierende Präsidentin / den amtierenden Präsidenten<br><strong><?php echo $praesident ?></strong><br><strong>E-Mail: <a href="mailto:<?php echo $praesident_mail ?>"><?php echo $praesident_mail ?></a></strong>.</p>
+<p><strong><?php echo $club_name ?></strong><br>vertreten durch die amtierende Präsidentin / den amtierenden Präsidenten<br><strong>E-Mail: <a href="mailto:<?php echo $praesident_mail ?>"><?php echo $praesident_mail ?></a></strong>.</p>
 
 </div>
 <br><br>
