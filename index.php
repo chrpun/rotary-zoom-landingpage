@@ -29,7 +29,6 @@ $show_error['input-firstname'] = false;
 $show_error['input-lastname'] = false;
 $show_error['input-rc'] = false;
 $show_error['input-email'] = false;
-$show_error['check-data'] = false;
 $show_error['check-recording'] = false;
 
 $show_error['check-data2'] = false;
@@ -77,14 +76,9 @@ if (!empty($_POST) && $_POST['go'] == 'guest') {
   
   }
   
-  $check_data = (isset($_POST['check-data']) && $_POST['check-data'] == 'on') ? true : false;
   $check_recording = (isset($_POST['check-recording']) && $_POST['check-recording'] == 'on') ? true : false;
   
-  // Check der beiden Checkboxen:
-  if (!$check_data) {
-    $error = true;
-    $show_error['check-data'] = true;
-  }
+  // Check der Checkbox:
   if (!$check_recording) {
     $error = true;
     $show_error['check-recording'] = true;
@@ -340,7 +334,8 @@ if (!empty($_POST) && $_POST['go'] == 'sso') {
               </div>
  
               <div class="mb-5 text-center">
-                Bevor es losgehen kann,<?php if ($allow_guest_participants && ($registration_enabled || $active_mandatory_registration) ): ?> füllen Sie bitte die Felder unten aus und<?php endif ?> lesen und akzeptieren Sie die Bedingungen<?php if ($sso_login_active): ?><?php if ($allow_guest_participants): ?> bzw.<?php endif ?> <?php if ($sso_login_active && !$allow_guest_participants): ?>und <?php endif ?>loggen sich mit Ihrem Rotary.de SSO-Login ein<?php endif ?>.<br>
+                Bevor es losgehen kann, möchten wir auf unsere <a href="files/<?php echo $dataprotection_filename ?>">Datenschutzhinweise</a> aufmerksam machen.<br>
+
                 Viel Spaß bei unseren Meetings<?php if ($club_is_rotaract && $rotaract_sponsor_club != '') echo ' - powered by <strong>'.$rotaract_sponsor_club.'</strong>' ?>!
               </div>
               
@@ -446,11 +441,8 @@ if (!empty($_POST) && $_POST['go'] == 'sso') {
                       </div>
                       <div class="mb-3"><small><a href="https://sso-server.rotary.de/password/mail/rocas_1850">REGISTRIEREN / PASSWORT ÄNDERN / PASSWORT VERGESSEN</a></small></div>
                   
-                      <div class="custom-control custom-checkbox mb-3">
-                        <input type="checkbox" class="custom-control-input<?php if ($show_error['check-data2']) echo ' is-invalid'; ?>" id="check-data2" name="check-data2" <?php echo (isset($check_data2) && $check_data2) ? 'checked' : ''; ?> required>
-                        <label class="custom-control-label" for="check-data2">Ich akzeptiere die <a href="files/<?php echo $dataprotection_filename ?>">Datenschutzbestimmungen</a>.</label>
-                        <div class="invalid-feedback">Bitte akzeptieren Sie unsere Datenschutzbestimmungen!</div>
-                      </div>
+                <?php endif ?>
+
                 
                       <div class="custom-control custom-checkbox mb-3">
                         <input type="checkbox" class="custom-control-input<?php if ($show_error['check-recording2']) echo ' is-invalid'; ?>" id="check-recording2" name="check-recording2" <?php echo (isset($check_recording2) && $check_recording2) ? 'checked' : ''; ?> required>

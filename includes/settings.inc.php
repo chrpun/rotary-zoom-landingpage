@@ -76,7 +76,6 @@ $dataprotection_filename = 'data-protection-example.pdf';
 $help_filename = 'help-example.pdf';
 
 // Für Impressum:
-$praesident = 'Max Mustermann';
 $praesident_mail = 'max@mustermann.de';
 
 //Social Buttons (wenn nicht vorhanden - leer (also '') lassen, dann wird das Icon nicht angezeigt.)
