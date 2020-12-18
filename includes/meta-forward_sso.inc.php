@@ -25,20 +25,20 @@ if (!isset($club_name) || !isset($url)) {
 $response['result']:
 {
     "active": true,
-    "scope": "91f84099-bb56-4b29-bc8d-a3f9096c9ef9",
+    "scope": "91f84099-bb56-4b29-xxxx-a3f9096c9ef9",
     "client_id": "rocas_rodas",
-    "username": "chrpun@gmail.com",
+    "username": "test@test.com",
     "token_type": "Bearer",
     "exp": 1593603396,
-    "sub": "2eb1f193-6adc-429b-ad5a-d34390398af1",
+    "sub": "2eb1f193-6adc-429b-xxxx-d34390398af1",
     "iss": "rocas_rodas",
-    "91f84099-bb56-4b29-bc8d-a3f9096c9ef9": "ROLE_ROWEB ROLE_EMGV ROLE_RC_ADMIN ROLE_RC_PRESIDENT_PAST ROLE_ROAPP",
+    "91f84099-bb56-4b29-xxxx-a3f9096c9ef9": "ROLE_ROWEB ROLE_EMGV ROLE_RC_ADMIN ROLE_RC_PRESIDENT_PAST ROLE_ROAPP",
     "salutation": "Herr",
     "prefix": "",
-    "firstName": "Christian",
+    "firstName": "John",
     "nobility": "",
-    "lastName": "Punke",
-    "rotaryInternationalNumber": "8625192"
+    "lastName": "Doe",
+    "rotaryInternationalNumber": "1234567"
 }
 */
 $data = $response['result'];
