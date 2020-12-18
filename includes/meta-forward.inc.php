@@ -19,34 +19,6 @@ if (!isset($club_name) || !isset($url)) {
   die();
 }
 
-
-if ($active_mandatory_registration && !$registration_enabled && !$zoom_host_case) {
-  
-  // Keine Registrierung bei Zoom - aber Übergabe des Namens!
-  
-  // Mobile Detection um den richtigen Direkt-Zoom-Link zu generieren:
-  // https://marketplace.zoom.us/docs/guides/guides/client-url-schemes
-
-  require_once __DIR__ . '/../vendor/Mobile_Detect.php';
-  $detect = new Mobile_Detect;
-  $deviceType = ($detect->isMobile() ? ($detect->isTablet() ? 'tablet' : 'phone') : 'computer');
-
-  switch ($deviceType) {
-    case 'tablet':
-    case 'phone':
-      $zoom_protokoll = 'zoomus';
-      break;
-  
-    case 'computer':
-    default:
-      $zoom_protokoll = 'zoommtg';
-      break;
-  }
-
-  $direct_zoom_link = $zoom_protokoll . '://zoom.us/join?confno='.$info['id'].'&pwd='.$info['encrypted_password'].'&uname='.urlencode($zoom_username);
-  
-}
-
 ?><!DOCTYPE html>
 <html lang="en">
 
@@ -57,12 +29,7 @@ if ($active_mandatory_registration && !$registration_enabled && !$zoom_host_case
   <meta name="description" content="Zoom Meeting Landing Page of <?php echo $club_name ?>">
   <meta name="author" content="Christian Punke, Rotary E-Club of D-1850">
   
-  <?php if ($registration_enabled || $zoom_host_case): ?>
-    <meta http-equiv="refresh" content="5; URL=<?php echo $url ?>">
-  <?php endif ?>
-  <?php if ($active_mandatory_registration && !$registration_enabled && !$zoom_host_case): ?>
-    <meta http-equiv="refresh" content="1; URL=<?php echo $direct_zoom_link ?>">
-  <?php endif ?>
+  <meta http-equiv="refresh" content="5; URL=<?php echo $url ?>">
 
   <!--
   Rotary Club Landing Page Software
@@ -74,8 +41,11 @@ if ($active_mandatory_registration && !$registration_enabled && !$zoom_host_case
 
   <!-- CSS -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-  <link rel="stylesheet" href="css/main.css" >
-  <?php require __DIR__ . '/../css/main_dynamic.php'; ?>
+  <?php if ($club_is_rotaract): ?>
+    <link rel="stylesheet" href="css/main_rotaract version.css" >
+  <?php else: ?>
+    <link rel="stylesheet" href="css/main.css" >
+  <?php endif ?>
   
   <!-- Fontawesome CSS-->
   <link href="vendor/fontawesome/css/fontawesome.min.css" rel="stylesheet">
@@ -102,18 +72,11 @@ if ($active_mandatory_registration && !$registration_enabled && !$zoom_host_case
                 <img src="img/club-logo.png" class="logo img-fluid"/>
                 <h3 class="login-heading mt-3">Vielen Dank!</h3>
               </div>
-              
+ 
               <div class="text-center">
-                <?php if ($registration_enabled || $zoom_host_case): ?>
-                  Sie werden in 5 Sekunden automatisch zu Zoom weitergeleitet. Sollte das nicht funktionien, klicken Sie bitte hier:
-                  <a href="<?php echo $url ?>" class="btn btn-lg btn-block btn-forward text-uppercase font-weight-bold mt-4 mb-4 btn-success" role="button">Weiter zu Zoom...</a>
-                <?php endif ?>
+                Sie werden in 5 Sekunden automatisch zu Zoom weitergeleitet. Sollte das nicht funktionien, klicken Sie bitte hier:
                 
-                <?php if ($active_mandatory_registration && !$registration_enabled && !$zoom_host_case): ?>
-                  In wenigen Sekunden sollten Sie automatisch gefragt werden ob Sie die Zoom App starten wollen. Sollte das nicht funktionien, klicken Sie bitte hier:
-                  <a href="<?php echo $direct_zoom_link ?>" class="btn btn-lg btn-block btn-forward text-uppercase font-weight-bold mt-4 mb-4 btn-success" role="button">Weiter zu Zoom...</a>
-                  Sie haben die Zoom Software noch nicht installiert und/oder der Button funktioniert nicht?<br><a href="<?php echo $url.'&uname='.urlencode($zoom_username); ?>">Hier klicken</a> um auf die Zoom-Homepage zu gehen und von dort die Software zu installieren und das Meeting zu starten.<br><br>
-                <?php endif ?>
+                <a href="<?php echo $url ?>" class="btn btn-lg btn-block btn-forward text-uppercase font-weight-bold mt-4 mb-4 btn-success" role="button">Weiter zu Zoom...</a>
                 
                 Viel Spaß bei unseren Meetings!<br><br>
                 

@@ -68,9 +68,6 @@ $rotaract_sponsor_club = '';
 // Direkte Weiterleitung zu Zoom (= true) oder erst Anzeige einer Erfolgsnachricht und dann Weiterleitung nach 5 Sekunden (= false)
 $direct_header_redirect = false;
 
-// Registrierung für Weitergabe an Zoom-Meeting App aktivieren (unabhängig ob man sich für das Meeting bei Zoom registrieren muss oder nicht):
-$active_mandatory_registration = true;
-
 //Diese Dateien müssen im Unterordner "files" liegen
 $dataprotection_filename = 'data-protection-example.pdf';
 $help_filename = 'help-example.pdf';
@@ -85,46 +82,6 @@ $instagram_link = '';
 $youtube_link = '';
 $twitter_link = '';
 
-
-##### VISUAL SETTINGS ####
-#### wenn diese verändert werden sollen, aktivieren - ansonsten werden die Standard-Werte aus der CSS genommen.
-
-$visual_bg_image = 'img/bg.jpg'; // Hintergrund-Bild für die linke Seite (Link von index.php aus gesehen)
-$visual_bg_color = array(247,168,27); // Farben in RGB (je 0-255)
-$visual_bg_opacity = 0.4; // Transparenz (0 = gar kein Overlay bis 1 = nur Farbe)
-
-$visual_bg_right_image = 'img/bg.jpg'; // Hintergrund-Bild für die rechte Seite (Link von index.php aus gesehen)
-$visual_bg_right_opacity = 0.9; // Transparenz (0 = gar kein Overlay bis 1 = nur Farbe)
-
-
-######## Rotary.de SSO Daten
-$oauth2_client_id = '### HIER RO.CAS SSO CLIENT ID EINFÜGEN ###';
-$oauth2_client_secret = '### HIER RO.CAS SSO CLIENT SECRET EINFÜGEN ###';
-$oauth2_token_endpoint = 'https://sso-server.rotary.de/oauth/token';
-$introspection_endpoint = 'https://sso-server.rotary.de/introspect';
-
-// eins von den beiden muss "true" sein (wenn nicht wird automatisch "guest" als true angenommen!)
-$sso_login_active = true;
-$allow_guest_participants = true;
-
-
-// Bis Scope Auflösung geklärt ist: Hier aktuellen Scope des RCs eintragen:
-$club_scope = '### HIER CLUB SCOPE EINFÜGEN ###';
-
-
-// Wer darf Zoom-Meetings hosten?
-// list: SSO-User die unten gelistet sind
-// rocas-role: RC Admin und amtierender RC Präsident (Default)
-$zoom_host_principle = 'rocas-role';
-
-// Erlaubte Zoom-Hosts (SSO-Usernames) (nur wenn $zoom_host_principle = 'list' !!)
-//$zoom_host['max@mustermann.de'] = true;
-//$zoom_host['john@doe.com'] = true;
-//...
-
-
-
-if (!$sso_login_active && !$allow_guest_participants) $allow_guest_participants = true;
 
 
 /*

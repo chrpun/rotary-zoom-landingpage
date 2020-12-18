@@ -276,8 +276,6 @@ function meeting_report($uuid)
 
   global $api_server;
   $token = jwt();
-  
-  $uuid = urlencode(urlencode($uuid)); //Note: Please double encode your UUID when using this API if the UUID begins with a '/'or contains ‘//’ in it.
 
   $curl = curl_init();
 
@@ -337,8 +335,6 @@ function participant_meeting_report($uuid)
 
   global $api_server;
   $token = jwt();
-  
-  $uuid = urlencode(urlencode($uuid)); //Note: Please double encode your UUID when using this API if the UUID begins with a '/'or contains ‘//’ in it.
 
   $curl = curl_init();
 
