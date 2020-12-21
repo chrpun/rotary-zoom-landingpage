@@ -57,7 +57,7 @@ if ($active_mandatory_registration && !$registration_enabled && !$zoom_host_case
   <meta name="description" content="Zoom Meeting Landing Page of <?php echo $club_name ?>">
   <meta name="author" content="Christian Punke, Rotary E-Club of D-1850">
   
-  <?php if ($registration_enabled || $zoom_host_case): ?>
+  <?php if ($registration_enabled || $zoom_host_case || !$active_mandatory_registration): ?>
     <meta http-equiv="refresh" content="5; URL=<?php echo $url ?>">
   <?php endif ?>
   <?php if ($active_mandatory_registration && !$registration_enabled && !$zoom_host_case): ?>
@@ -104,7 +104,7 @@ if ($active_mandatory_registration && !$registration_enabled && !$zoom_host_case
               </div>
               
               <div class="text-center">
-                <?php if ($registration_enabled || $zoom_host_case): ?>
+                <?php if ($registration_enabled || $zoom_host_case || !$active_mandatory_registration): ?>
                   Sie werden in 5 Sekunden automatisch zu Zoom weitergeleitet. Sollte das nicht funktionien, klicken Sie bitte hier:
                   <a href="<?php echo $url ?>" class="btn btn-lg btn-block btn-forward text-uppercase font-weight-bold mt-4 mb-4 btn-success" role="button">Weiter zu Zoom...</a>
                 <?php endif ?>
