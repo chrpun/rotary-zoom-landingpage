@@ -23,9 +23,10 @@ POST-Datenverarbeitung
 ==========================================
 */
 
-# Alle Felder initialieseren um "not defined" Notices zu vermeiden
+# Alle Felder initialisieren um "not defined" Notices zu vermeiden
 $error = false;
 $show_error['input-password'] = false;
+$show_error['other_meeting_running'] = false;
 
 # Check ob Formulardaten vorhanden sind
 if (!empty($_POST)) {
@@ -40,6 +41,24 @@ if (!empty($_POST)) {
     $show_error['input-password'] = true;
   }
   
+  
+  if (!$error) {
+    // Überprüfung ob noch andere Meetings laufen >> aktuell noch unter der Annahme, dass die Lizenz immer nur ein Meeting hosten kann!
+    $meeting_list = list_all_meetings();
+  
+    foreach ($meeting_list as $meeting_item) {
+      $a = get_meeting_info($meeting_item['id']);
+      if ($a['status'] == 'started' && $meeting_item['id'] != $meeting_id) {
+        $error = true;
+        $show_error['other_meeting_running'] = true;
+        $error_message = 'Anderes Meeting läuft: "'.$meeting_item['topic'].'".<br>Start als Host nicht möglich!';
+      }
+    
+      //$total_list[$meeting_item['id']] = $a['status'].' ('.$meeting_item['topic'].')';
+    }
+  }
+  
+  
   if(!$error){
     
     // Weiterleitung zum Meeting als Host.
@@ -47,6 +66,7 @@ if (!empty($_POST)) {
     $url = $info['start_url']; # info wird in settings.inc.php belegt
   
     if (!$direct_header_redirect) {
+      $zoom_host_case = true;
       require __DIR__ . '/includes/meta-forward.inc.php'; // HTML-Seite mit Weiterleitungslink und Meta-Refresh...
     } else {
       header("Location: ".$url);
@@ -77,11 +97,8 @@ if (!empty($_POST)) {
 
   <!-- CSS -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-  <?php if ($club_is_rotaract): ?>
-    <link rel="stylesheet" href="css/main_rotaract version.css" >
-  <?php else: ?>
-    <link rel="stylesheet" href="css/main.css" >
-  <?php endif ?>
+  <link rel="stylesheet" href="css/main.css" >
+  <?php require __DIR__ . '/css/main_dynamic.php'; ?>
   
   <!-- Fontawesome CSS-->
   <link href="vendor/fontawesome/css/fontawesome.min.css" rel="stylesheet">
@@ -108,6 +125,10 @@ if (!empty($_POST)) {
                 <img src="img/club-logo.png" class="logo img-fluid"/>
                 <h3 class="login-heading mt-3">Host Login</h3>
               </div>
+              
+              <?php if ($show_error['other_meeting_running']): ?>
+                <div class="alert alert-danger text-center" role="alert"><?php echo $error_message; ?></div>
+              <?php endif ?>
  
               <div class="mb-5 text-center">
                 Bitte das Host-Passwort eintragen um das Meeting zu starten.
@@ -183,9 +204,6 @@ if (!empty($_POST)) {
 <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
-
-  <!-- Font Awesome Kit -->
-  <script src="https://kit.fontawesome.com/e166820a61.js" crossorigin="anonymous"></script>
 
 </body>
 
