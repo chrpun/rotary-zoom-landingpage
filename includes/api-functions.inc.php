@@ -45,6 +45,57 @@ function jwt($time=10)
 
 /*
 ==========================================
+API-Call Funktion: List All Meetings
+https://marketplace.zoom.us/docs/api-reference/zoom-api/meetings/meetings
+==========================================
+*/
+function list_all_meetings()
+{
+
+  global $api_server;
+  $token = jwt();
+  
+  $curl = curl_init();
+
+  curl_setopt_array($curl, array(
+  	CURLOPT_URL => $api_server."users/me/meetings",
+  	CURLOPT_RETURNTRANSFER => true,
+  	CURLOPT_ENCODING => "",
+  	CURLOPT_MAXREDIRS => 10,
+  	CURLOPT_TIMEOUT => 30,
+  	CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+  	CURLOPT_CUSTOMREQUEST => "GET",
+  	CURLOPT_HTTPHEADER => array(
+  		"authorization: Bearer ".$token,
+  		"content-type: application/json"
+  	),
+  ));
+
+  $response = curl_exec($curl);
+  $err = curl_error($curl);
+  curl_close($curl);
+
+  if ($err) {
+  	exit("cURL Error #:" . $err);
+  } else {
+  	$array = json_decode($response, true);
+  	if (json_last_error()) {
+  		exit("JSON Error:" . json_last_error_msg());
+  	} else {
+      if(isset($array['code'])){
+        exit("API Error #" . $array['code']. ': '. $array['message']);
+      } else {
+    		// $url = $array['start_url'];
+    		// $status = $array['status']; //wating, started oder finished
+        return $array['meetings'];
+      }
+  	}
+  }
+}
+
+
+/*
+==========================================
 API-Call Funktion: Meeting Infos
 https://marketplace.zoom.us/docs/api-reference/zoom-api/meetings/meeting
 ==========================================
