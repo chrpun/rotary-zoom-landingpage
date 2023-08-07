@@ -3,13 +3,13 @@
 
 ========================================================
 Rotary Club Zoom Landing Page
-Copyright 2020 Christian Punke, Rotary E-Club of D-1850
+Copyright 2023 Christian Punke, Rotary E-Club of D-1850
 https://github.com/chrpun/rotary-zoom-landingpage
 ========================================================
 
 includes/api-functions.inc.php (required)
 >> wird von settings.inc.pph eingebunden
->> JSON Web Token Generator Funktion
+>> OAuth Access Token Funktion
 >> Verschiedenste API-Call Funktionen zu Zoom
 
 ========================================================
@@ -18,30 +18,53 @@ includes/api-functions.inc.php (required)
 
 /*
 ==========================================
-JWT Funktion
+OAuth 2.0 Access Token Funktion (Server-To-Server Zoom App)
+https://developers.zoom.us/docs/internal-apps/
+https://developers.zoom.us/docs/internal-apps/create/
 ==========================================
 */
-function jwt($time=10)
+function get_oauth_token()
 {
-  global $api_key, $api_secret;
+  global $accountId, $clientId, $clientSecret, $tokenUrl;
   
-  // Create token header as a JSON string
-  $header = json_encode(['typ' => 'JWT', 'alg' => 'HS256']);
-  // Create token payload as a JSON string (10 seconds valid)
-  $payload = json_encode(['iss' => $api_key, 'exp' => time()+$time]);
-  // Encode Header to Base64Url String
-  $base64UrlHeader = str_replace(['+', '/', '='], ['-', '_', ''], base64_encode($header));
-  // Encode Payload to Base64Url String
-  $base64UrlPayload = str_replace(['+', '/', '='], ['-', '_', ''], base64_encode($payload));
-  // Create Signature Hash
-  $signature = hash_hmac('sha256', $base64UrlHeader . "." . $base64UrlPayload, $api_secret, true);
-  // Encode Signature to Base64Url String
-  $base64UrlSignature = str_replace(['+', '/', '='], ['-', '_', ''], base64_encode($signature));
-  // Create JWT
-  $jwt = $base64UrlHeader . "." . $base64UrlPayload . "." . $base64UrlSignature;
+  $basic_auth = $clientId.':'.$clientSecret;
+  $base64_auth = base64_encode($basic_auth);
   
-  return $jwt;
+  $curl = curl_init();
+  curl_setopt_array($curl, array(
+    CURLOPT_URL => $tokenUrl.'?grant_type=account_credentials&account_id='.$accountId,
+    CURLOPT_RETURNTRANSFER => true,
+    CURLOPT_ENCODING => '',
+    CURLOPT_MAXREDIRS => 10,
+    CURLOPT_TIMEOUT => 0,
+    CURLOPT_FOLLOWLOCATION => true,
+    CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+    CURLOPT_CUSTOMREQUEST => 'POST',
+    CURLOPT_HTTPHEADER => array(
+      'Authorization: Basic '.$base64_auth
+    ),
+  ));
+  
+  $response = curl_exec($curl);
+  $err = curl_error($curl);
+  curl_close($curl);
+
+  if ($err) {
+  	exit("cURL Error #:" . $err);
+  } else {
+  	$array = json_decode($response, true);
+  	if (json_last_error()) {
+  		exit("JSON Error:" . json_last_error_msg());
+  	} else {
+      if(isset($array['code'])){
+        exit("API Error #" . $array['code']. ': '. $array['message']);
+      } else {
+        return $array['access_token'];
+      }
+  	}
+  }
 }
+
 
 /*
 ==========================================
@@ -51,10 +74,8 @@ https://marketplace.zoom.us/docs/api-reference/zoom-api/meetings/meeting
 */
 function get_meeting_info($id)
 {
-
-  
-  global $api_server;
-  $token = jwt();
+  global $api_server, $access_token;
+  $token = $access_token;
   
   $curl = curl_init();
 
@@ -104,8 +125,8 @@ https://marketplace.zoom.us/docs/api-reference/zoom-api/meetings/meetingregistra
 function register_participant($id, $participant_info)
 {
 
-  global $api_server;
-  $token = jwt();
+  global $api_server, $access_token;
+  $token = $access_token;
   
   $json = json_encode($participant_info);
   
@@ -151,8 +172,8 @@ https://marketplace.zoom.us/docs/api-reference/zoom-api/meetings/meetingregistra
 function list_all_participants($id)
 {
 
-  global $api_server;
-  $token = jwt();
+  global $api_server, $access_token;
+  $token = $access_token;
 
   $curl = curl_init();
 
@@ -196,8 +217,8 @@ https://marketplace.zoom.us/docs/api-reference/zoom-api/meetings/pastmeetings
 function list_last_meetings($id)
 {
 
-  global $api_server;
-  $token = jwt();
+  global $api_server, $access_token;
+  $token = $access_token;
 
   $curl = curl_init();
 
@@ -274,8 +295,8 @@ https://marketplace.zoom.us/docs/api-reference/zoom-api/reports/reportmeetingdet
 function meeting_report($uuid)
 {
 
-  global $api_server;
-  $token = jwt();
+  global $api_server, $access_token;
+  $token = $access_token;
 
   $curl = curl_init();
 
@@ -333,8 +354,8 @@ https://marketplace.zoom.us/docs/api-reference/zoom-api/reports/reportmeetingpar
 function participant_meeting_report($uuid)
 {
 
-  global $api_server;
-  $token = jwt();
+  global $api_server, $access_token;
+  $token = $access_token;
 
   $curl = curl_init();
 
@@ -373,8 +394,8 @@ function participant_meeting_report($uuid)
         {
             "id": "0SW6P8sDSJymQSVH1O69Dw",
             "user_id": "16778240",
-            "name": "Jan-Arne Schiller",
-            "user_email": "christian.punke@rotary-eclub1850.de",
+            "name": "Vorname Nachname",
+            "user_email": "vorname.nachname@firma.de",
             "join_time": "2020-04-19T20:25:46Z",
             "leave_time": "2020-04-19T20:31:25Z",
             "duration": 339,

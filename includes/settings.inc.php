@@ -3,8 +3,10 @@
 
 ========================================================
 Rotary Club Zoom Landing Page
-Copyright 2020 Christian Punke, Rotary E-Club of D-1850
+Copyright 2023 Christian Punke, Rotary E-Club of D-1850
 https://github.com/chrpun/rotary-zoom-landingpage
+
+Update 2023: Wechsel von JWT auf OAuth 2.0 (Server-To-Server Zoom App)
 ========================================================
 
 includes/setting.inc.php (required)
@@ -18,7 +20,7 @@ includes/setting.inc.php (required)
 ========================================================
 LICENSE
 ========================================================
-Copyright 2020 Christian Punke, Rotary E-Club of D-1850
+Copyright 2023 Christian Punke, Rotary E-Club of D-1850
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
@@ -31,7 +33,6 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 // Laden der benötigten Zoom API-Funktionen
 require __DIR__ . '/api-functions.inc.php'; # Zoom API Funktionen
 
-
 /*
 ===================================================
 SETTINGS
@@ -39,7 +40,7 @@ Statisch - nicht verändern
 ===================================================
 */
 $api_server = 'https://api.zoom.us/v2/';
-
+$tokenUrl = 'https://zoom.us/oauth/token';
 
 /*
 ===================================================
@@ -48,9 +49,11 @@ Individuell - dürfen/müssen angepasst werden
 ===================================================
 */
 
-// API Daten für eine JWT-App im Zoom Marketspace
-$api_key = '### HIER API-KEY EINFÜGEN ###';
-$api_secret = '### HIER API-SECRET EINFÜGEN ###';
+// API Daten für die Server-To-Server OAuth-App im Zoom Marketspace
+
+$accountId = '### HIER ACCOUNT ID EINFÜGEN ###';
+$clientId = '### HIER CLIENT ID EINFÜGEN ###';
+$clientSecret = '### HIER CLIENT SECRET EINFÜGEN ###';
 
 // Selbstgewähltes Passwort für die Host-Login-Funktion
 $host_password = '123456789';
@@ -90,6 +93,8 @@ Meeting-Infos für Website Funktionen bereitstellen
 Statisch - nicht verändern
 ==========================================
 */
+
+$access_token = get_oauth_token(); // Access token is retreived for making API requests
 
 $info = get_meeting_info($meeting_id);
 

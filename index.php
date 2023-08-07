@@ -2,8 +2,10 @@
 /*
 ========================================================
 Rotary Club Zoom Landing Page
-Copyright 2020 Christian Punke, Rotary E-Club of D-1850
+Copyright 2023 Christian Punke, Rotary E-Club of D-1850
 https://github.com/chrpun/rotary-zoom-landingpage
+
+Update 2023: Wechsel von JWT auf OAuth
 ========================================================
 
 index.php
