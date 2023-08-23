@@ -23,7 +23,7 @@ Dynamic Landing Page for Rotary and Rotaract Clubs which use Zoom Meetings.
 
 6. Fertig! :)
 
-Detaillierte Informationen (insbesondere zu Schritt 3) stehen in [dieser PDF](landing-page_beschreibung_v01.pdf)
+Detaillierte Informationen (insbesondere zu Schritt 3) stehen in [dieser PDF](/landing-page_beschreibung_v02_oauth.pdf)
 
 
 ## Beispiel-Installation eines kompletten Webservers (CentOS 8 – Minimal Install)
